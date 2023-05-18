@@ -1,46 +1,37 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <v-app class="pa-4">
+    <div class="d-flex">
+      <div class="">
+        <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+      </div>
+      <div class="ml-auto">
+        <v-icon
+          icon="mdi-theme-light-dark"
+          title="light/dark mode"
+          @click="toggleTheme"
+          class="ml-auto"
+        ></v-icon>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <time-zone />
+  </v-app>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+import { useTheme } from 'vuetify'
+import TimeZone from './components/TimeZone.vue'
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+export default {
+  components: { TimeZone },
+  setup() {
+    const theme = useTheme()
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    return {
+      theme,
+      toggleTheme: () =>
+        (theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark')
+    }
   }
 }
-</style>
+</script>
+
